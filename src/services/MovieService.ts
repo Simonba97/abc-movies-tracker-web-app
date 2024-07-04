@@ -1,4 +1,3 @@
-import { IMovieItem } from "../models/IMovieItem";
 import { IData, ITMDBResponse } from "../models/ITMDBResponse";
 import { TMDbService } from "./core/TMDbService";
 

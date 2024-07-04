@@ -1,5 +1,3 @@
-/* import { useEffect } from 'react';
-import { MovieService } from '../services/MovieService.ts'; */
 import MainTitle from "../components/MainTitle";
 import PopularMovies from "../components/PopularMovies";
 
