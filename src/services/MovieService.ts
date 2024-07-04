@@ -1,3 +1,5 @@
+import { IMovieItem } from "../models/IMovieItem";
+import { IData, ITMDBResponse } from "../models/ITMDBResponse";
 import { TMDbService } from "./core/TMDbService";
 
 /**
@@ -14,13 +16,19 @@ export class MovieService extends TMDbService {
      * Obtiene la información de un partido desde un archivo.
      * @returns {Promise<IInfoMatchItem>} - Una promesa que se resuelve con la información del partido.
      */
-    public async getPopularMovies(): Promise</* ITeamsInformationResponse | undefined */any> {
+    public async getPopularMovies(page: number): Promise<IData> {
         try {
-            const endpoint = `/movie/popular?language=es-ES`;
-            return await this.makeRequest(endpoint);
+            const endpoint = `/movie/popular`;
+            const tmdbResponse: ITMDBResponse = await this.makeRequest(endpoint, {
+                params: {
+                    page: page
+                }
+            });
+
+            return tmdbResponse.data;
         } catch (error) {
-            /* console.error(``); */
-            return undefined;
+            console.error('Error fetching popular movies:', error);
+            throw error;
         }
     } // end getPopularMovies
 

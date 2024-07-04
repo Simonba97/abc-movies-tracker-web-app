@@ -1,25 +1,26 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import { TMDB_BASE_URL } from '../../config/tmdb';
+import { IParams, ITMDBResponse } from '../../models/ITMDBResponse';
 
 export abstract class TMDbService {
 
-    private _API_KEY: string;
-    private _baseAPIUrl: string;
-    private _tmdbAp: any;
+    // Variable global del Axios intance para cuando vayamos hacer una consulta
+    private _tmdbAp: AxiosInstance;
 
     /**
-      * Crear una instancia de TMDbService
-      * @param {(WebPartContext)} context
-      * @memberof TMDbService
-      */
+     * Crear una instancia de TMDbService
+     * @memberof TMDbService
+     */
     public constructor() {
-        this._API_KEY = "72df454aa3e34fc89f10bb43729ca51c";
-        /* this._API_KEY = import.meta.env.VITE_RAPIDAPI_API_KEY; */
-        this._baseAPIUrl = 'https://api.themoviedb.org/3';
-
+        /* 
+        * Configuración de la creación de la instancia de axios
+        */
         this._tmdbAp = axios.create({
-            baseURL: this._baseAPIUrl,
+            baseURL: TMDB_BASE_URL,
             params: {
-                api_key: this._API_KEY,
+                api_key: import.meta.env.VITE_TMDB_API_KEY, // Api key almacenada en las variables de entorno
+                language: 'es-ES', // Lenguaje para que todas las respuestas sean en español
+
             },
         });
     }
@@ -30,10 +31,10 @@ export abstract class TMDbService {
      * @returns {Promise<string>}
      * @memberof TMDbService
      */
-    public async makeRequest(endpoint: string): Promise<any> {
+    public async makeRequest(endpoint: string, params?: { params: IParams }): Promise<ITMDBResponse> {
         try {
-            const response = await this._tmdbAp.get(endpoint);
-            return response.data.results;
+            const response: ITMDBResponse = await this._tmdbAp.get(endpoint, params);
+            return response;
         } catch (error) {
             console.error('Error fetching popular movies:', error);
             throw error;
