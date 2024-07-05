@@ -11,7 +11,6 @@ const PopularMovies = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [loading, setLoading] = useState<boolean>(true); // Estado para indicar si la solicitud está en curso
 
-
     useEffect(() => {
         const fetchMovies = async () => {
             try {
