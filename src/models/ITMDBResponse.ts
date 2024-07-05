@@ -10,6 +10,7 @@ export interface IParams {
     api_key?: string;
     language?: string;
     page?: number;
+    query?: string;
 }
 
 export interface IData {

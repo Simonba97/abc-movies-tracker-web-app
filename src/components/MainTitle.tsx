@@ -7,7 +7,7 @@ const MainTitle = ({ title, description }: { title: string, description: string 
                 </h1>
             </div>
             <div id="description">
-                <p>
+                <p className="font-light text-justify">
                     {description}
                 </p>
             </div>

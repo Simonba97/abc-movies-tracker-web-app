@@ -8,8 +8,8 @@ const PopularMovies = () => {
 
     const movieService = new MovieService();
     const [movies, setMovies] = useState<IMovieItem[]>([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [loading, setLoading] = useState(true); // Estado para indicar si la solicitud está en curso
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(true); // Estado para indicar si la solicitud está en curso
 
 
     useEffect(() => {
