@@ -7,7 +7,7 @@ import { ICreditsItem } from "../models/ICreditsItem";
 import { TMDB_BASE_URL_IMG } from "../config/tmdb";
 import Badge from "../components/common/Badge";
 import CastMovie from "../components/CastMovie";
-
+import { Helmet } from 'react-helmet';
 
 const FullMovieDetail = () => {
 
@@ -68,6 +68,22 @@ const FullMovieDetail = () => {
 
     return (
         <div id="contFullMovieDetail">
+            <Helmet>
+                <title>{`${fullMovieDetail?.title} - ABC Movie Tracker`}</title>
+                <meta name="description" content={`${fullMovieDetail?.overview}`} />
+
+                {/* <!-- Open Graph meta tags --> */}
+                <meta property="og:title" content={`${fullMovieDetail?.title} - ABC Movie Tracker`} />
+                <meta property="og:description" content={`${fullMovieDetail?.overview}`} />
+                <meta property="og:image" content={`${TMDB_BASE_URL_IMG}${fullMovieDetail?.poster_path}`} />
+                <meta property="og:type" content="website" />
+
+                {/* <!-- Twitter Card meta tags  --> */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={`${fullMovieDetail?.title} - ABC Movie Tracker`} />
+                <meta property="og:description" content={`${fullMovieDetail?.overview}`} />
+                <meta name="twitter:image" content={`${TMDB_BASE_URL_IMG}${fullMovieDetail?.poster_path}`} />
+            </Helmet>
             <div id="headInformationMovie" className="flex flex-col sm:flex-row p-2 sm:p-4 bg-white rounded-t-lg">
                 <div className="sm:w-1/2">
                     <div className="flex flex-col -space-y-2">
