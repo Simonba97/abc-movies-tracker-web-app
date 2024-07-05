@@ -5,6 +5,8 @@ import { IFullMovieDetailItem } from "../models/IFullMovieDetailItem";
 import { format } from "date-fns";
 import { ICreditsItem } from "../models/ICreditsItem";
 import { TMDB_BASE_URL_IMG } from "../config/tmdb";
+import Badge from "../components/common/Badge";
+import CastMovie from "../components/CastMovie";
 
 
 const FullMovieDetail = () => {
@@ -56,7 +58,12 @@ const FullMovieDetail = () => {
 
     if (!loading) {
         yearMovie = fullMovieDetail?.release_date ? format(fullMovieDetail.release_date, 'yyyy') : 'Sin fecha';
-        debugger;
+    } else {
+        return (
+            <div>
+                Por favor espere
+            </div>
+        )
     }
 
     return (
@@ -118,7 +125,7 @@ const FullMovieDetail = () => {
                 </div>
 
                 {/* Descripción de la película */}
-                <div className="bg-white p-2 sm:p-4">
+                <div className="bg-white rounded-b-lg p-2 sm:p-4">
                     <span className="font-light text-lg">{fullMovieDetail?.overview}</span>
                 </div>
 
@@ -151,7 +158,21 @@ const FullMovieDetail = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Géneros de la película */}
+                <div id="contGenrs" className="flex justify-evenly md:lg:xl:justify-normal py-4 lg:py-6">
+                    {fullMovieDetail?.genres.map((genre) =>
+                        <Badge
+                            text={genre.name}
+                        />
+                    )}
+                </div>
             </div>
+
+            {/* Créditos de la película */}
+            {creditsMovie?.cast &&
+                <CastMovie cast={creditsMovie.cast} />
+            }
         </div>
     )
 }
