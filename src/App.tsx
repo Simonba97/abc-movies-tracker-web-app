@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from "./pages/Home";
+import FullMovieDetail from './pages/FullMovieDetail';
 
 const App = () => {
   return (
@@ -8,6 +9,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/movie-detail" element={<FullMovieDetail />} />
           </Routes>
         </Router>
       </main>

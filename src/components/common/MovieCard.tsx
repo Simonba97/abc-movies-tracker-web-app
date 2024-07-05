@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { TMDB_BASE_URL_IMG } from "../../config/tmdb";
 import { IMovieItem } from "../../models/IMovieItem";
 
 const MovieCard = ({ movie }: { movie: IMovieItem }) => {
     return (
-        <div className="flex-[0_0_48%] flex-col sm:flex-[0_0_30%] lg:flex-[0_0_20%] flex mb-8 ml-1 sm:ml-3 lg:ml-6 rounded overflow-hidden shadow-lg bg-gray-50 cursor-pointer">
+        <Link className="flex-[0_0_48%] flex-col sm:flex-[0_0_30%] lg:flex-[0_0_20%] flex mb-8 ml-1 sm:ml-3 lg:ml-6 rounded overflow-hidden shadow-lg bg-gray-50 cursor-pointer" to={`/movie-detail?movieId=${movie.id}`}>
             <img className="h-52 sm:h-80 lg:h-96 object-cover" src={`${TMDB_BASE_URL_IMG}${movie.poster_path}`} alt={movie.title} />
             <div className="p-2">
                 <div className="flex items-center">
@@ -14,7 +15,7 @@ const MovieCard = ({ movie }: { movie: IMovieItem }) => {
                 </div>
                 <div className="font-light text-xs sm:text-sm lg:text-lg">{movie.title}</div>
             </div>
-        </div>
+        </Link>
     )
 }
 
