@@ -3,10 +3,10 @@ import { IMovieItem } from "../models/IMovieItem";
 import { SearchService } from "../services/SearchService";
 
 const useMovieSearch = (query: string, limitResults: number) => {
+    const searchService = new SearchService();
+
     const [movies, setMovies] = useState<IMovieItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
-
-    const searchService = new SearchService();
 
     const searchMovies = useCallback(async (searchQuery: string) => {
         try {
@@ -32,6 +32,7 @@ const useMovieSearch = (query: string, limitResults: number) => {
             return;
         }
 
+        /* Para esperar una pausa de 500 mili segundos para evitar consultar tantas veces */
         const debounceTimeout = setTimeout(() => {
             searchMovies(query);
         }, 500);
@@ -39,9 +40,9 @@ const useMovieSearch = (query: string, limitResults: number) => {
         return () => {
             clearTimeout(debounceTimeout);
         };
-    }, [query, searchMovies]);
+    }, [query, searchMovies]); // Dependencias de llamados
 
     return { movies, loading };
 }
 
-export default useMovieSearch
+export default useMovieSearch;

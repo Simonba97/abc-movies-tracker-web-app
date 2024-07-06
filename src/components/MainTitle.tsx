@@ -1,18 +1,21 @@
 const MainTitle = ({ title, description }: { title: string, description: string }) => {
     return (
-        <header id='contMainTitle' className="text-center mb-10">
+        <div id='contMainTitle' className="text-center mb-6 -space-y-1">
+            {/* Site title */}
             <div id="title">
-                <h1 className="text-2xl sm:text-4xl font-semibold">
+                <h1 className="text-4xl sm:text-6xl font-bold">
                     {title}
                 </h1>
             </div>
+
+            {/* Site description */}
             <div id="description">
-                <p className="font-light text-justify">
+                <p className="font-light text-center italic text-gray-500">
                     {description}
                 </p>
             </div>
-        </header>
-    )
+        </div>
+    );
 }
 
 export default MainTitle

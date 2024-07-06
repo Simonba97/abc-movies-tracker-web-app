@@ -5,18 +5,15 @@ import { IVideosItems } from "../models/IVideosItem";
 import { TMDbService } from "./core/TMDbService";
 
 /**
- * Servicio que contiene los metodos necesarios para gestionar un Team específico
- * @copyright 2023 - El uso de esta libreria esta reservador para este sitio y cualquier cambio o reutilización debe ser autorizado por el autor.
- * @author Simón Bustamante Alzate <simonba97@hotmail.com> / Fecha: 26.10.2023 - Creado
- *
- * @export
+ * Servicio que contiene los metodos necesarios para oobtener información del modelo Movie
  * @class MovieService
  */
 export class MovieService extends TMDbService {
 
     /**
-     * Obtiene la información de un partido desde un archivo.
-     * @returns {Promise<IData>} - Una promesa que se resuelve con la información del partido.
+     * Obtiene todas las películas populares actualemente
+     * @param {number} page - Página actual para consultar específicamente sobre esa página
+     * @returns {Promise<IData>}
      */
     public async getPopularMovies(page: number): Promise<IData> {
         try {
@@ -36,7 +33,8 @@ export class MovieService extends TMDbService {
 
     /**
     * Consulta de información de una película por ID.
-    * @returns {Promise<IData>} - Una promesa que se resuelve con la información del partido.
+    * @param {number} movieId
+    * @returns {Promise<IFullMovieDetailItem>} 
     */
     public async getMovieById(movieId: number): Promise<IFullMovieDetailItem> {
         try {
@@ -44,14 +42,15 @@ export class MovieService extends TMDbService {
             const tmdbResponse: any = await this.makeRequest(endpoint);
             return tmdbResponse.data;
         } catch (error) {
-            console.error('Error fetching popular movies:', error);
+            console.error('Error fetching movie by ID:', error);
             throw error;
         }
     } // end getMovieById
 
     /**
-    * Consulta de información de una película por ID.
-    * @returns {Promise<IData>} - Una promesa que se resuelve con la información del partido.
+    * Consulta de los créditos de una película por ID.
+    * @param {number} movieId
+    * @returns {Promise<ICreditsItem>} 
     */
     public async getCreditsByMovieId(movieId: number): Promise<ICreditsItem> {
         try {
@@ -65,8 +64,9 @@ export class MovieService extends TMDbService {
     } // end getCreditsByMovieId
 
     /**
-    * Consulta de información de una película por ID.
-    * @returns {Promise<IData>} - Una promesa que se resuelve con la información del partido.
+    * Consulta de videos relacionados a la película
+    * @param {number} movieId
+    * @returns {Promise<IVideosItems | null>} 
     */
     public async getVideosByMovieId(movieId: number): Promise<IVideosItems | null> {
         try {

@@ -2,18 +2,15 @@ import { IData, ITMDBResponse } from "../models/ITMDBResponse";
 import { TMDbService } from "./core/TMDbService";
 
 /**
- * Servicio que contiene los metodos necesarios para gestionar un Team específico
- * @copyright 2023 - El uso de esta libreria esta reservador para este sitio y cualquier cambio o reutilización debe ser autorizado por el autor.
- * @author Simón Bustamante Alzate <simonba97@hotmail.com> / Fecha: 26.10.2023 - Creado
- *
- * @export
+ * Servicio que contiene los metodos necesarios para oobtener información del modelo search
  * @class SearchService
  */
 export class SearchService extends TMDbService {
 
     /**
-     * Obtiene la información de un partido desde un archivo.
-     * @returns {Promise<IInfoMatchItem>} - Una promesa que se resuelve con la información del partido.
+     * Obtiene información de las películas basado en un query
+     * @param {string} query - Query con información para realizar búsquedas y encontrar coincidencias
+     * @returns {Promise<IData>} 
      */
     public async getMoviesByQuery(query: string): Promise<IData> {
         try {
@@ -21,7 +18,7 @@ export class SearchService extends TMDbService {
             const tmdbResponse: ITMDBResponse = await this.makeRequest(endpoint, {
                 params: {
                     query: query,
-                    page: 1
+                    page: 1 // Se limita a buscar unicamente en la página #1
                 }
             });
 

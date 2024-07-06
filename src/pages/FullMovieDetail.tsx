@@ -8,16 +8,21 @@ import { TMDB_BASE_URL_IMG } from "../config/tmdb";
 import Badge from "../components/common/Badge";
 import CastMovie from "../components/CastMovie";
 import { Helmet } from 'react-helmet';
+import MessageCard from "../components/common/MessageCard";
 
 const FullMovieDetail = () => {
 
+    /* Instancia de servicio para consultar información relevante */
+    const movieService = new MovieService();
+
+    /* Definición de estados */
     const [fullMovieDetail, setFullMovieDetail] = useState<IFullMovieDetailItem>();
     const [creditsMovie, setCreditsMovie] = useState<ICreditsItem>();
     const [trailerMovieId, setTrailerMovieId] = useState<string>();
     const [loading, setLoading] = useState(true); // Estado para indicar si la solicitud está en curso
+    const [error, setError] = useState<string | null>(null); // Estado para manejar errores
 
-    const movieService = new MovieService();
-
+    /* Obtenemos los parametros de la URL para consultar la información */
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const idMovie: number = Number(queryParams.get('movieId'));
@@ -25,10 +30,12 @@ const FullMovieDetail = () => {
     let yearMovie: string = 'Sin fecha';
 
     useEffect(() => {
+
         const fetchMovies = async () => {
             try {
                 setLoading(true);
 
+                /* Consultamos simultaneamente la información completa de la película, créditos de la película y el trailer de la película */
                 const [fullMovieDetailRespose, creditsMovieResponse, trailerMovieResponse] = await Promise.all([
                     movieService.getMovieById(idMovie),
                     movieService.getCreditsByMovieId(idMovie),
@@ -38,8 +45,9 @@ const FullMovieDetail = () => {
                 setFullMovieDetail(fullMovieDetailRespose);
                 setCreditsMovie(creditsMovieResponse);
 
+
+                // Filtramos para obtener solo el tráiler
                 if (trailerMovieResponse) {
-                    // Filtramos para obtener solo el tráiler
                     const trailer = trailerMovieResponse.results.find(video => video.type === 'Trailer' && video.site === 'YouTube');
                     if (trailer) {
                         setTrailerMovieId(trailer.key);
@@ -47,27 +55,36 @@ const FullMovieDetail = () => {
                 }
 
             } catch (error: any) {
-                //TODO: Implementar card de mensaje de error
+                setError(error.message || 'Error desconocido');
             } finally {
                 setLoading(false);
             }
         };
 
+        // Call Async
         fetchMovies();
-    }, []);
+    }, []); // Sin dependencias
 
-    if (!loading) {
+    if (error) {
+        return (
+            <div className='flex justify-center'>
+                <MessageCard titleMsj='Estamos presentando problemas' descMsj='Por favor vuelva más tarde' isLoading={false} />
+            </div>
+        );
+    } else if (!loading) {
         yearMovie = fullMovieDetail?.release_date ? format(fullMovieDetail.release_date, 'yyyy') : 'Sin fecha';
     } else {
         return (
-            <div>
-                Por favor espere
+            <div className='flex justify-center'>
+                <MessageCard titleMsj='Su contenido está cargando' descMsj='Por favor espere...' isLoading={loading} />
             </div>
         )
     }
 
     return (
         <div id="contFullMovieDetail">
+
+            {/* Page SEO */}
             <Helmet>
                 <title>{`${fullMovieDetail?.title} - ABC Movie Tracker`}</title>
                 <meta name="description" content={`${fullMovieDetail?.overview}`} />
@@ -84,6 +101,8 @@ const FullMovieDetail = () => {
                 <meta property="og:description" content={`${fullMovieDetail?.overview}`} />
                 <meta name="twitter:image" content={`${TMDB_BASE_URL_IMG}${fullMovieDetail?.poster_path}`} />
             </Helmet>
+
+            {/* Información principal de la película */}
             <div id="headInformationMovie" className="flex flex-col sm:flex-row p-2 sm:p-4 bg-white rounded-t-lg">
                 <div className="sm:w-1/2">
                     <div className="flex flex-col -space-y-2">
@@ -125,6 +144,8 @@ const FullMovieDetail = () => {
                     </div>
                 </div>
             </div>
+
+            {/*  Información complementaria, trailer, poster, descripción*/}
             <div id="bodyInformationMovie" >
                 <div className="flex flex-row">
                     <div className="w-full lg:w-1/4">

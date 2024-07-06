@@ -1,12 +1,12 @@
 import MovieSearch from "../components/common/MovieSearch";
 import MainTitle from "../components/MainTitle";
 import PopularMovies from "../components/PopularMovies";
-import { Helmet } from 'react-helmet';
-
+import { Helmet } from 'react-helmet'; // 
 
 const Home = () => {
     return (
         <section id="home" className="h-screen">
+            {/* Page SEO */}
             <Helmet>
                 <title>ABC Movie Tracker: descubre, guarda y explora tus películas favoritas</title>
                 <meta name="description" content={'Descubre y disfruta de las películas más populares, busca títulos específicos, guarda tus favoritas para verlas más tarde y explora información detallada sobre cada película, incluyendo sinopsis, trailers y críticas. Con ABC Movie Tracker, mantente al día con los últimos éxitos de taquilla y convierte cada noche en una noche de película. ¡Empieza hoy mismo y haz del cine una experiencia inolvidable'} />
@@ -25,15 +25,20 @@ const Home = () => {
                     content="Descubre y disfruta de las películas más populares, busca títulos específicos, guarda tus favoritas para verlas más tarde y explora información detallada sobre cada película, incluyendo sinopsis, trailers y críticas. Con ABC Movie Tracker, mantente al día con los últimos éxitos de taquilla y convierte cada noche en una noche de película. ¡Empieza hoy mismo y haz del cine una experiencia inolvidable." />
                 <meta name="twitter:image" content="metaTags.jpeg" />
             </Helmet>
+
+            {/* Información principal de la página */}
             <MainTitle
                 title={`ABC Movies Tracker`}
-                description={`¡Bienvenido a ABC Movie Tracker! Aquí podrás descubrir y ver las películas más populares, buscar títulos específicos, guardar tus favoritas para verlas más tarde y obtener información detallada sobre cada película, incluyendo sinopsis, trailers y críticas. Con ABC Movie Tracker, mantente al día con los últimos éxitos de taquilla y disfruta del cine como nunca antes. ¡Empieza hoy mismo y convierte cada noche en una noche de película!`}
+                description={`Tu brújula en la búsqueda del entretenimiento`}
             />
-            {/* Renderiza el componente MovieSearch */}
+
+            {/* Barra de búsqueda */}
             <MovieSearch />
+
+            {/* Lista de películas más populares */}
             <PopularMovies />
         </section>
-    )
+    );
 }
 
 export default Home

@@ -26,9 +26,10 @@ export abstract class TMDbService {
     }
 
     /**
-     * TODO: Descripción de la información
-     * @param {number} itemId
-     * @returns {Promise<string>}
+     * Estructura base para poder realizar una consulta al API de TMBd
+     * @param {string} endpoint - Ruta para obtener la información
+     * @param {IParams} params - Opcional para enviar más configuraciones al API
+     * @returns {Promise<ITMDBResponse>}
      * @memberof TMDbService
      */
     public async makeRequest(endpoint: string, params?: { params: IParams }): Promise<ITMDBResponse> {
@@ -36,7 +37,7 @@ export abstract class TMDbService {
             const response: ITMDBResponse = await this._axiosInstance.get(endpoint, params);
             return response;
         } catch (error) {
-            console.error('Error fetching popular movies:', error);
+            console.error('Error fetching to API:', error);
             throw error;
         }
     } // end makeRequest

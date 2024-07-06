@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import { MovieService } from '../services/MovieService.ts';
 import { IMovieItem } from '../models/IMovieItem.ts';
-import MovieCard from './common/MovieCard.tsx';
 import Pagination from './common/Pagination.tsx';
+import ListMovies from './ListMovies.tsx';
+import MessageCard from './common/MessageCard.tsx';
 
 const PopularMovies = () => {
 
-    const movieService = new MovieService();
+    // Definición de estados
     const [movies, setMovies] = useState<IMovieItem[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [loading, setLoading] = useState<boolean>(true); // Estado para indicar si la solicitud está en curso
+    const [loading, setLoading] = useState<boolean>(true); // Indica si la solicitud está en curso o no
+    const [error, setError] = useState<string | null>(null); // Estado para manejar errores
+
+    // Instancia del servicio de MovieService para realizar las consultas
+    const movieService = new MovieService();
 
     useEffect(() => {
+
+        // Consulta de películas 
         const fetchMovies = async () => {
             try {
                 setLoading(true);
@@ -20,32 +27,48 @@ const PopularMovies = () => {
                         setMovies(dataResponse.results);
                     });
             } catch (error: any) {
-                //TODO: Implementar card de mensaje de error
+                setError(error.message || 'Error desconocido');
             } finally {
                 setLoading(false);
             }
         };
 
+        // Llamado consulta async
         fetchMovies();
-    }, [currentPage]);
 
-    return (
-        <section id='contPopularMovies'>
-            <h2 className='text-xl font-medium'>{`Películas más populares${currentPage != 1 ? ', página ' + currentPage + ':' : ':'}`}</h2>
-            <div className='flex flex-wrap justify-center'>
-                {!loading && movies.length > 0 &&
-                    movies.map(movie => (
-                        <MovieCard key={movie.id} movie={movie} />
-                    ))}
+    }, [currentPage]); // Dependencia del estado para volver a consultar la información
+
+    if (error) {
+        return (
+            <div className='flex justify-center'>
+                <MessageCard titleMsj='Estamos presentando problemas' descMsj='Por favor vuelva más tarde' isLoading={false} />
             </div>
-            <div>
+        );
+    } else if (loading) {
+        return (
+            <div className='flex justify-center'>
+                <MessageCard titleMsj='Su contenido está cargando' descMsj='Por favor espere...' isLoading={loading} />
+            </div>
+        )
+    } else {
+        return (
+            <div id='contPopularMovies' className='pb-6'>
+                {/* Título */}
+                <h2 className='text-xl md:text-3xl font-semibold mb-3'>{`Películas más populares${currentPage != 1 ? ', página ' + currentPage + ':' : ':'}`}</h2>
+
+                {/* Lista de resultados */}
+                <ListMovies movies={movies} />
+
+                {/* Páginación */}
                 <Pagination
                     currentPage={currentPage}
                     onPageChange={setCurrentPage}
                 />
             </div>
-        </section>
-    )
+        )
+    }
+
+
 }
 
 export default PopularMovies
