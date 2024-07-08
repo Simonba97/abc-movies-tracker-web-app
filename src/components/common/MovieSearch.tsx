@@ -24,12 +24,12 @@ const MovieSearch = () => {
                         type="text"
                         value={query}
                         onChange={handleInputChange}
-                        className="bg-gray-700 border border-gray-600 placeholder-gray-400 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                        className="bg-gray-700 border border-gray-600 placeholder-gray-300 text-gray-100 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
                         placeholder="Buscar película por nombre..."
                     />
                 </div>
             </form>
-            <MovieList movies={movies} loading={loading}/>
+            <MovieList movies={movies} loading={loading} />
         </div>
     );
 }
