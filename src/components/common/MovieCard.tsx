@@ -8,7 +8,7 @@ const MovieCard = ({ movie }: { movie: IMovieItem }) => {
         <div id="contMovieCard" className="flex-[0_0_48%] flex-col sm:flex-[0_0_31%] lg:flex-[0_0_23%] flex mb-4 rounded shadow-lg bg-gray-100 cursor-pointer" >
 
             {/* Acción de guardar en favoritos */}
-            <FavoriteMovie movieId={movie.id} />
+            <FavoriteMovie movieDetail={movie} />
 
             {/* Card de la película */}
             <Link to={`/movie-detail?movieId=${movie.id}`}>

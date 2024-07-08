@@ -3,7 +3,7 @@ import MovieCard from "./common/MovieCard"
 
 const ListMovies = ({ movies }: { movies: IMovieItem[] }) => {
     return (
-        <div className='flex flex-wrap justify-between'>
+        <div className='flex flex-wrap justify-evenly'>
             {movies.map(movie => (
                 <MovieCard key={movie.id} movie={movie} />
             ))}
