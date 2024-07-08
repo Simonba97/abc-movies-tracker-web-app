@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { MovieService } from "../services/MovieService";
 import { IFullMovieDetailItem } from "../models/IFullMovieDetailItem";
-import { format } from "date-fns";
 import { ICreditsItem } from "../models/ICreditsItem";
 import { TMDB_BASE_URL_IMG } from "../config/tmdb";
 import CastMovie from "../components/CastMovie";
