@@ -29,8 +29,7 @@ const MovieSearch = () => {
                     />
                 </div>
             </form>
-            {loading && <p>Loading...</p>}
-            <MovieList movies={movies} />
+            <MovieList movies={movies} loading={loading}/>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 const MovieMinCard = ({ movie }: { movie: IMovieItem }) => {
 
-    const imgMovie: string = `${TMDB_BASE_URL_IMG}${movie.poster_path}`;
+    const imgMovie: string = movie.poster_path ? `${TMDB_BASE_URL_IMG}${movie.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image+Available';
     let dateMovie: string = "Sin registro de fecha";
     let descriptionMovie: string = "";
 
