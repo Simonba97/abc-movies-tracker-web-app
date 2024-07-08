@@ -5,7 +5,7 @@ import FullMovieDetail from './pages/FullMovieDetail';
 const App = () => {
   return (
     <div className='App'>
-      <main className="m-2 sm:m-5 md:m-10">
+      <main className="mx-2 mt-10 sm:mx-5 md:mx-10">
         <Router>
           <Routes>
             <Route path="/" element={<Home />} />
